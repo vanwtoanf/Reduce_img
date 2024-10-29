@@ -10,10 +10,10 @@ const downloadLinkDiv = document.getElementById('downloadLink');
 fileInput.addEventListener('change', (event) => {
     selectedFiles = Array.from(event.target.files);
     isFolder = false;
-    // document.getElementById('widthInput').value = "";   // Xóa width khi chọn file mới
-    // document.getElementById('message').innerText = "";
-    // downloadLinkDiv.innerHTML = "";
-    resetForm();
+    document.getElementById('widthInput').value = "";   // Xóa width khi chọn file mới
+    document.getElementById('message').innerText = "";
+    downloadLinkDiv.innerHTML = "";
+    // resetForm();
     displaySelectedInfo(); 
 });
 
@@ -21,10 +21,10 @@ fileInput.addEventListener('change', (event) => {
 folderInput.addEventListener('change', (event) => {
     selectedFiles = Array.from(event.target.files);
     isFolder = true;
-    // document.getElementById('widthInput').value = "";
-    // document.getElementById('message').innerText = "";
-    // downloadLinkDiv.innerHTML = "";
-    resetForm();
+    document.getElementById('widthInput').value = "";
+    document.getElementById('message').innerText = "";
+    downloadLinkDiv.innerHTML = "";
+    // resetForm();
     displaySelectedInfo();
 });
 
@@ -48,35 +48,35 @@ function displaySelectedInfo() {
 
 // Xử lý sự kiện khi nhấn nút tải lên
 document.getElementById('uploadBtn').addEventListener('click', async () => {
-if (selectedFiles.length === 0) {
-    document.getElementById('message').innerText = "Please select a file or folder.";
-    return;
-}
+    if (selectedFiles.length === 0) {
+        document.getElementById('message').innerText = "Please select a file or folder.";
+        return;
+    }
 
-const formData = new FormData();
-selectedFiles.forEach(file => formData.append('files', file));
+    const formData = new FormData();
+    selectedFiles.forEach(file => formData.append('files', file));
 
-const widthInput = document.getElementById('widthInput').value;
-    if (widthInput) formData.append('width', widthInput);
+    const widthInput = document.getElementById('widthInput').value;
+        if (widthInput) formData.append('width', widthInput);
 
-// Hiển thị trạng thái "Đang xử lý..."
-document.getElementById('message').innerText = "Loading...";
+    // Hiển thị trạng thái "Đang xử lý..."
+    document.getElementById('message').innerText = "Loading...";
 
-const response = await fetch('/reduce/process-images/', {
-    method: 'POST',
-    body: formData,
-});
+    const response = await fetch('/reduce/process-images/', {
+        method: 'POST',
+        body: formData,
+    });
 
-const result = await response.json();
-document.getElementById('message').innerText = result.info;
+    const result = await response.json();
+    document.getElementById('message').innerText = result.info;
 
-if (result.download_link) {
-    // Hiển thị link tải về khi backend trả về link
-    downloadLinkDiv.innerHTML = `<a href="${result.download_link}" target="_blank" rel="noopener noreferrer">Click here to download</a>`;
-    downloadLinkDiv.style.display = "block";
-    document.getElementById('message').innerText = "Ok!";
+    if (result.download_link) {
+        // Hiển thị link tải về khi backend trả về link
+        downloadLinkDiv.innerHTML = `<a href="${result.download_link}" target="_blank" rel="noopener noreferrer">Click here to download</a>`;
+        downloadLinkDiv.style.display = "block";
+        document.getElementById('message').innerText = "Ok!";
 
-}
+    }
 });
 
 // Xóa giá trị width khi tải lại trang
