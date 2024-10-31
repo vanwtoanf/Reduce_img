@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Reduce Image</title>
+</head>
+<body>
+    <h1>Media Upload</h1>
+    <P>Add your documents here</P>
+    <div id="drop-area">
+        <p style="font-weight: bold;">Drag your file</p>
+        <p>Or</p>
+        <input type="file" id="fileElem" accept="image/*" style="display:none;" multiple>
+        <input type="file" id="folderElem" webkitdirectory directory style="display:none;">
+        <label for="fileElem" style="font-weight: bold;cursor:pointer;">Select file</label>
+        <label for="folderElem" style="font-weight: bold;cursor:pointer; margin-left: 10px;">Select folder</label>
+        <br><br>
+        <input type="number" id="widthInput" placeholder="New width: (px)">
+    </div>
+    
+    <br>
+    <div id="selectedFileInfo"></div>
+    <div id="message"></div>
+    <br>
+    <button id="uploadBtn">Upload</button>
+    <div id="downloadStatus"></div>
+    <div id="downloadLink"></div>
+
+    <script src="/static/script.js"></script>
+    
+</body>
+</html>
