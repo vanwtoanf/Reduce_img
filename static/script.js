@@ -57,6 +57,13 @@ selectedFiles.forEach(file => formData.append('files', file));
 const widthInput = document.getElementById('widthInput').value;
     if (widthInput) formData.append('width', widthInput);
 
+// Thêm tên thư mục vào formData nếu đang xử lý thư mục
+if (isFolder && selectedFiles.length > 0) {
+    const folderPath = selectedFiles[0].webkitRelativePath;
+    const folderName = folderPath.split("/")[0];
+    formData.append('directory_name', folderName);
+}
+
 // Hiển thị trạng thái "Đang xử lý..."
 document.getElementById('message').innerText = "Loading...";
 

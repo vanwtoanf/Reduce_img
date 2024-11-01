@@ -25,7 +25,11 @@ async def process_and_save_image_async(file_path: str, output_path: str, width: 
     await loop.run_in_executor(executor, process_image, file_path, output_path, width)
 
 @router.post("/process-images/")
-async def process_images(files: list[UploadFile] = File(...), width: int = Form(None)):
+async def process_images(
+    files: list[UploadFile] = File(...), 
+    width: int = Form(None),
+    directory_name: str = Form(None)
+    ):
     # Tạo thư mục tạm riêng cho mỗi yêu cầu
     session_id = str(uuid.uuid4())  # Tạo ID duy nhất cho mỗi phiên
     temp_folder = os.path.join(os.getcwd(), "temp", session_id)
@@ -60,7 +64,7 @@ async def process_images(files: list[UploadFile] = File(...), width: int = Form(
 
     else:
         # Xử lý nhiều file, lưu thành file ZIP
-        zip_filename = "processed_images.zip"
+        zip_filename = f"{directory_name or session_id}.zip"
         zip_path = os.path.join(temp_folder, zip_filename)
         tasks = []  # Danh sách các tác vụ xử lý ảnh
 
